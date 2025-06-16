@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Products</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff0f5;
+            color: #3a3a3a;
+            padding: 2rem;
+        }
+        h2 {
+            color: #c71585;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #ffe4f0;
+            color: #c71585;
+        }
+        tr:hover {
+            background-color: #fff5f8;
+        }
+        .rating-bubble input[type="radio"] {
+            display: none;
+        }
+        .rating-bubble label {
+            display: inline-block;
+            padding: 10px 16px;
+            margin: 4px;
+            border-radius: 50%;
+            background-color: #f8d8ec;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .rating-bubble input[type="radio"]:checked + label {
+            background-color: #c71585;
+            color: white;
+        }
+        .button {
+            background-color: #c71585;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.3);
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #a10e6a;
+        }
+    </style>
+</head>
+<body>
+    <h2>Rate the Recommended Products</h2>
+    <form method="POST" action="/rate_product">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in recommendations.iterrows() %}
+                <tr>
+                    <td>{{ row['Product'] }}</td>
+                    <td class="rating-bubble">
+                        {% for rate in range(1, 6) %}
+                            <input type="radio" name="rating_{{ row['Product'] }}" id="r{{ rate }}_{{ index }}" value="{{ rate }}">
+                            <label for="r{{ rate }}_{{ index }}">{{ rate }}</label>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Submit Ratings" class="button">
+    </form>
+    <br><br>
+    <a href="/">⟵ Back to Home</a>
+</body>
+</html>

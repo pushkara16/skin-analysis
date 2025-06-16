@@ -1,0 +1,62 @@
+return f"""
+        <html>
+        <head>
+            <style>
+                body {{
+                    background-color: #f8f1f9;
+                    color: #5f0060;
+                    font-family: 'Arial', sans-serif;
+                    text-align: center;
+                    padding: 20px;
+                }}
+                h2 {{
+                    font-size: 2.5em;
+                    color: #b3006e;
+                    margin-bottom: 20px;
+                }}
+                h4 {{
+                    font-size: 1.5em;
+                    color: #7f004e;
+                    margin: 10px 0;
+                }}
+                p {{
+                    font-size: 1.1em;
+                    color: #5f0060;
+                    margin-bottom: 20px;
+                    text-align: left;
+                    display: inline-block;
+                    width: 80%;
+                }}
+                a {{
+                    text-decoration: none;
+                    font-size: 1.2em;
+                    color: #5f0060;
+                    padding: 10px 20px;
+                    background-color: #f5c6f6;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                    display: inline-block;
+                }}
+                a:hover {{
+                    background-color: #f1b0d6;
+                }}
+                .container {{
+                    background-color: #ffffff;
+                    border-radius: 10px;
+                    padding: 30px;
+                    display: inline-block;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    width: 80%;
+                    margin: 0 auto;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h2>Food Recommendations</h2>
+                {food_suggestions if food_suggestions else "No food suggestions available."}
+                <a href='/recommend'>Go to Skincare Products ➡️</a>
+            </div>
+        </body>
+        </html>
+    """

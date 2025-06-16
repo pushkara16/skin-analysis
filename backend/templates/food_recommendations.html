@@ -1,0 +1,120 @@
+<html>
+<head>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffd6ec, #ffe6f2);
+            color: #5f0060;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            font-size: 3em;
+            color: #b3006e;
+            margin-top: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h4 {
+            font-size: 1.5em;
+            color: #7f004e;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #5f0060;
+            margin-bottom: 20px;
+            text-align: left;
+            display: inline-block;
+            width: 80%;
+            line-height: 1.6;
+            padding-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #5f0060;
+            padding: 12px 24px;
+            background-color: #f5c6f6;
+            border-radius: 30px;
+            margin-top: 30px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #f1b0d6;
+            transform: translateY(-5px);
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            display: inline-block;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 50px auto;
+            animation: fadeIn 1s ease;
+        }
+
+        .card {
+            background-color: #ffe6f2;
+            border: 2px solid #ff99cc;
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .card h4 {
+            color: #cc0066;
+            font-size: 1.5em;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 1.1em;
+            color: #660033;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Food Recommendations for Your Skin</h2>
+        {% for suggestion in food_suggestions %}
+            <div class="card">
+                <h4>{{ suggestion.issue }}</h4>
+                <p>{{ suggestion.food }}</p>
+            </div>
+        {% else %}
+            <p>No food suggestions available.</p>
+        {% endfor %}
+        <a href='/recommend'>Go to Skincare Products ➡️</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Analysis Result</title>
+
+    <!-- Link to Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Lora', serif;
+            background: url("{{ url_for('static', filename='images/Rose water for your face_ Benefits and how to use _ Curology.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #000000;
+            text-align: center;
+            padding: 50px 20px;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #000000;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #000000;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            color: #000000;
+            margin: 15px 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            text-align: left;
+        }
+
+        .graphic {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            z-index: -1;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 50%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .result-list {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1em;
+            color: #000000;
+            text-align: left;
+            margin: 0;
+        }
+
+        .result-list li {
+            margin: 8px 0;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-list li::before {
+            content: "🧴";
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #ff66b3;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 1em;
+            color: #000000;
+            padding: 12px 25px;
+            background-color: #ff66b3;
+            border-radius: 30px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a:hover {
+            background-color: #ff3385;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Background Graphic Element -->
+        <div class="graphic"></div>
+
+        <h2>Scan Completed!</h2>
+        <div>
+            <h3>Your Skin Analysis is Ready</h3>
+            <h4>Skin Type: {{ skin_type }}</h4>
+
+            <h4>Detected Skin Issues:</h4>
+            <ul class="result-list">
+                {% for issue in skin_issues %}
+                    <li><span>{{ issue }}</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href='/about_issues'>Next ➡️</a>
+    </div>
+
+</body>
+</html>

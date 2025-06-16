@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+  <!-- Minimal face outline -->
+  <circle cx="50" cy="50" r="40" stroke="#FF96B9" stroke-width="1.5" fill="none"/>
+  
+  <!-- Simplified face outline -->
+  <path d="M30 40C35 30 45 25 50 25C55 25 65 30 70 40" stroke="#FF96B9" stroke-width="1.5" fill="none"/>
+  <path d="M70 60C65 70 55 75 50 75C45 75 35 70 30 60" stroke="#FF96B9" stroke-width="1.5" fill="none"/>
+  
+  <!-- Minimal eyes -->
+  <circle cx="35" cy="45" r="2" fill="#FF96B9"/>
+  <circle cx="65" cy="45" r="2" fill="#FF96B9"/>
+  
+  <!-- Simple mouth -->
+  <path d="M40 60C43 63 47 64 50 64C53 64 57 63 60 60" stroke="#FF96B9" stroke-width="1.5" fill="none"/>
+  
+  <!-- Prep items -->
+  <rect x="15" y="25" width="10" height="5" rx="1" stroke="#FF96B9" stroke-width="1" fill="none"/>
+  <rect x="75" y="25" width="10" height="5" rx="1" stroke="#FF96B9" stroke-width="1" fill="none"/>
+  <rect x="15" y="70" width="10" height="5" rx="1" stroke="#FF96B9" stroke-width="1" fill="none"/>
+  <rect x="75" y="70" width="10" height="5" rx="1" stroke="#FF96B9" stroke-width="1" fill="none"/>
+  
+  <!-- Steps text indicator -->
+  <path d="M85 50L95 50" stroke="#FF96B9" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 50L15 50" stroke="#FF96B9" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Step 1 indicator -->
+  <circle cx="50" cy="12" r="10" fill="none" stroke="#FF96B9" stroke-width="1"/>
+  <text x="50" y="16" font-family="Arial" font-size="12" fill="#FF96B9" text-anchor="middle">1</text>
+</svg>

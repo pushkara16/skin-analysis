@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" fill="none">
+  <!-- Base Layer - Lighter, more subtle pink -->
+  <rect width="1000" height="1000" fill="#FFF0F5"/>
+  
+  <!-- Minimal diagonal stripes -->
+  <path d="M0 1000L1000 0" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M100 1000L1000 100" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M200 1000L1000 200" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M300 1000L1000 300" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M400 1000L1000 400" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M500 1000L1000 500" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M600 1000L1000 600" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M700 1000L1000 700" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M800 1000L1000 800" stroke="#FDE0EB" stroke-width="1" />
+  <path d="M900 1000L1000 900" stroke="#FDE0EB" stroke-width="1" />
+  
+  <!-- Subtle gradient overlay -->
+  <rect width="1000" height="1000" fill="url(#paint0_linear)" fill-opacity="0.3"/>
+  
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="1000" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFD6E5" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+</svg>

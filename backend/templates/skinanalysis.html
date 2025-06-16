@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skin Analysis</title>
+</head>
+<body>
+    <h2>Skin Type: {{ skin_type }}</h2>
+    <h3>Detected Issues:</h3>
+    <ul>
+        {% for issue in issues %}
+            <li>{{ issue }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('recommend_products') }}">Get Recommendations</a>
+</body>
+</html>

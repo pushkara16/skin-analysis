@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - SkinCare Analyser</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #c71585, #a10e6a);
+            color: white;
+            height: 100%;
+            text-align: center;
+        }
+
+        .hero {
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url('') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin-top: -100px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .section-title {
+            color: #c71585;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-text {
+            font-size: 1.2rem;
+            color: #5f0060;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #c71585;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            margin-top: 3rem;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.2);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            background-color: #a10e6a;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #c71585;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            font-size: 1rem;
+            color: #5f0060;
+        }
+
+        .feature i {
+            font-size: 3rem;
+            color: #c71585;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Track Your Skin Health</h1>
+        <p>Your skin health is more than just your appearance. It can affect everything — from your confidence to your self-esteem. The good news is that understanding the connection between your skin and overall health is easier than ever.</p>
+    </div>
+
+    <div class="content">
+        <h2 class="section-title">Welcome to SkinCare Analyser</h2>
+        <p class="section-text">
+            SkinCare Analyser is a revolutionary tool designed to help individuals analyze their skin condition.
+            Using advanced AI and machine learning, our system detects common skin issues such as acne, pigmentation,
+            wrinkles, and more. This allows us to recommend personalized skincare products and foods that are tailored to your unique skin needs.
+        </p>
+        <a class="button" href="/get_started">Start Your Journey ➡️</a>
+
+
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-microscope"></i>
+                <h3>AI-Powered Analysis</h3>
+                <p>Using the latest AI technologies, we analyze your skin in real-time to give you precise recommendations.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-leaf"></i>
+                <h3>Personalized Recommendations</h3>
+                <p>Our system recommends products and foods based on your unique skin issues and preferences.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sync-alt"></i>
+                <h3>Continuous Improvement</h3>
+                <p>As you continue using our system, we adjust our recommendations based on your skin's progress and changes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

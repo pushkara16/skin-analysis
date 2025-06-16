@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Video for Skin Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      background: linear-gradient(to right, #ffe6f0, #ffe6f9);
+      color: #3a3a3a;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 60px 40px;
+    }
+
+    .left {
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .left h1 {
+      color: #b30059;
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+    }
+
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      background-color: #ffe0ef;
+      border-left: 8px solid #cc0066;
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .step:hover {
+      transform: translateX(10px);
+    }
+
+    .step-title {
+      font-weight: bold;
+      color: #cc0066;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .right {
+      background-image: url("backend/static/images/Rose water for your face_ Benefits and how to use _ Curology.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .upload-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .upload-card h1 {
+      font-size: 2.5rem;
+      color: #cc0066;
+      margin-bottom: 30px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      border: 2px dashed #cc0066;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    button {
+      padding: 12px 25px;
+      background-color: #cc0066;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a6004d;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="left">
+    <h1>Quick Steps to Follow</h1>
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-title">Step 1: Prep Your Face</div>
+        <div>Clean your face thoroughly. Avoid makeup or skincare products before the scan.</div>
+      </div>
+      <div class="step">
+        <div class="step-title">Step 2: Perfect Lighting</div>
+        <div>Make sure your face is well-lit and clearly visible on camera.</div>
+      </div>
+      <div class="step">
+        <div class="step-title">Step 3: Record Angles</div>
+        <div>Capture a short video with: Front View, Left Side, and Right Side of your face.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="upload-card">
+      <h1>Upload Your Video</h1>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="video/*" required>
+        <br>
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
