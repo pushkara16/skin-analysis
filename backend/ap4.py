@@ -29,8 +29,8 @@ food_file = r"C:\Users\Lekhana\Downloads\food (1).csv"
 UPLOAD_FOLDER = "backend/uploads"
 os.makedirs(UPLOAD_FOLDER,exist_ok=True)
 YOLO_MODEL_A_PATH = r"C:\Users\Lekhana\Downloads\plswork1.pt"
-YOLO_MODEL_B_PATH=r"C:\Users\Lekhana\Downloads\tionbest (1).pt"
-model = YOLO(r"C:\Users\Lekhana\Downloads\tionbest (1).pt")  # load it
+YOLO_MODEL_B_PATH=r"C:\Users\Lekhana\Downloads\tionbest.pt"
+model = YOLO(r"C:\Users\Lekhana\Downloads\tionbest.pt")  # load it
 # If no GPU, use CPU
 # re-export it in current compatible format
 
@@ -72,7 +72,6 @@ def register():
         password = hashlib.sha256(request.form['password'].encode()).hexdigest()
         user_id = str(uuid.uuid4())
 
-        # Assign skin type randomly
         skin_types = ["Oily", "Dry", "Combination", "Sensitive"]
         skin_type = skin_types[len(username) % len(skin_types)]
 

@@ -117,7 +117,6 @@ def run_yolo(video_path):
     yolo_command = f"yolo task=detect mode=predict model={YOLO_MODEL_PATH} conf=0.25 source={video_path} save=True"
     result = subprocess.run(yolo_command, shell=True, capture_output=True, text=True)
     return result.stdout if result.returncode == 0 else "Error processing video."
-
 def process_video(video_path):
     """Handle the YOLO processing in the background"""
     detected_text = run_yolo(video_path)
@@ -128,31 +127,19 @@ def process_video(video_path):
     detected_issues = [label for label in detected_labels if label not in skin_types]
     detected_issues = list(set(detected_issues)) if detected_issues else ["No issues detected"]
 
+    # Update session with detected results
     session['skin_type'] = detected_skin_type
     session['skin_issues'] = detected_issues
     session['yolo_done'] = True  # Mark YOLO as complete
+
 @app.route('/skin_analysis')
 def skin_analysis():
     if 'uploaded_file' not in session:
         return redirect(url_for('upload_video'))
 
-    video_path = session['uploaded_file']
-    detected_text = run_yolo(video_path)
+    # Show the loading page while YOLO processing happens in the background
+    return render_template("skin_analysis.html")
 
-    # Extract labels using regex
-    detected_labels = re.findall(r"(Acne|Wrinkles|Pigmentation|Sensitive|Normal|Oily|Dry|Combination)", detected_text)
-
-    # Determine skin type and issues
-    skin_types = {"Normal", "Oily", "Dry", "Combination"}
-    detected_skin_type = next((label for label in detected_labels if label in skin_types), "Unknown")
-    detected_issues = [label for label in detected_labels if label not in skin_types]
-    detected_issues = list(set(detected_issues)) if detected_issues else ["No issues detected"]
-
-    # Save to session
-    session['skin_type'] = detected_skin_type
-    session['skin_issues'] = detected_issues
-
-    return redirect(url_for('show_analysis_result'))
 
 
 @app.route('/show_analysis_result')

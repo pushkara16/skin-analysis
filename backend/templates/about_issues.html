@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Your Skin Issues</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #ffd6ec, #ffe6f2);
+            color: #88004d;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px 20px;
+            background: linear-gradient(90deg, #ff80b3, #ffb3cc);
+            color: white;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 6px 18px rgba(255, 105, 180, 0.2);
+        }
+
+        .header h2 {
+            font-size: 3em;
+            font-weight: 600;
+            margin: 0;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff0f5;
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(255, 105, 180, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        .card {
+            background-color: #ffe6f2;
+            border: 2px solid #ff99cc;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card h4 {
+            color: #cc0066;
+            font-size: 1.5em;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 1.1em;
+            color: #660033;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(90deg, #ff66a3, #ff3385);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            width: fit-content;
+            margin: 40px auto 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #ff3385, #e60073);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>About Your Skin Issues</h2>
+    </div>
+
+    <div class="container">
+
+        {% for info in about_info %}
+        <div class="card">
+            <h4>{{ info['issue'] }}</h4>
+            <p>{{ info['description'] }}</p>
+        </div>
+        {% endfor %}
+
+        <a href="/food_recommendations" class="btn">
+            Go to Food Recommendations ➡
+        </a>
+
+    </div>
+
+</body>
+</html>

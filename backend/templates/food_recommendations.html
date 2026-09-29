@@ -1,82 +1,59 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Food Recommendations</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
-            background: linear-gradient(135deg, #ffd6ec, #ffe6f2);
-            color: #5f0060;
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #ffd6ec, #ffe6f2);
+            color: #88004d;
         }
 
-        h2 {
+        .header {
+            text-align: center;
+            padding: 60px 20px 20px;
+            background: linear-gradient(90deg, #ff80b3, #ffb3cc);
+            color: white;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 6px 18px rgba(255, 105, 180, 0.2);
+        }
+
+        .header h2 {
             font-size: 3em;
-            color: #b3006e;
-            margin-top: 50px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            margin: 0;
             animation: fadeInDown 1s ease-out;
         }
 
-        h4 {
-            font-size: 1.5em;
-            color: #7f004e;
-            margin: 10px 0;
-        }
-
-        p {
-            font-size: 1.1em;
-            color: #5f0060;
-            margin-bottom: 20px;
-            text-align: left;
-            display: inline-block;
-            width: 80%;
-            line-height: 1.6;
-            padding-right: 20px;
-        }
-
-        a {
-            text-decoration: none;
-            font-size: 1.2em;
-            color: #5f0060;
-            padding: 12px 24px;
-            background-color: #f5c6f6;
-            border-radius: 30px;
-            margin-top: 30px;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        a:hover {
-            background-color: #f1b0d6;
-            transform: translateY(-5px);
-        }
-
         .container {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            display: inline-block;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            margin: 50px auto;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff0f5;
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(255, 105, 180, 0.2);
             animation: fadeIn 1s ease;
         }
 
         .card {
             background-color: #ffe6f2;
             border: 2px solid #ff99cc;
-            border-radius: 15px;
+            border-radius: 16px;
             padding: 25px 30px;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
         }
 
         .card h4 {
@@ -89,32 +66,72 @@
             font-size: 1.1em;
             color: #660033;
             line-height: 1.6;
-            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(90deg, #ff66a3, #ff3385);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            width: fit-content;
+            margin: 40px auto 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #ff3385, #e60073);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
+
+    <div class="header">
         <h2>Food Recommendations for Your Skin</h2>
-        {% for suggestion in food_suggestions %}
-            <div class="card">
-                <h4>{{ suggestion.issue }}</h4>
-                <p>{{ suggestion.food }}</p>
-            </div>
-        {% else %}
-            <p>No food suggestions available.</p>
-        {% endfor %}
-        <a href='/recommend'>Go to Skincare Products ➡️</a>
     </div>
+
+    <div class="container">
+
+        {% for suggestion in food_suggestions %}
+        <div class="card">
+            <h4>{{ suggestion['issue'] }}</h4>
+            <p>{{ suggestion['food'] }}</p>
+        </div>
+        {% endfor %}
+
+        <a href="/recommend" class="btn">
+            Go to Skincare Products ➡
+        </a>
+
+    </div>
+
 </body>
 </html>
