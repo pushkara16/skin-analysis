@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff0f5;
+            color: #3a3a3a;
+            padding: 2rem;
+        }
+        h2 {
+            color: #c71585;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #ffe4f0;
+            color: #c71585;
+        }
+        tr:hover {
+            background-color: #fff5f8;
+        }
+        .rating-bubble input[type="radio"] {
+            display: none;
+        }
+        .rating-bubble label {
+            display: inline-block;
+            padding: 10px 16px;
+            margin: 4px;
+            border-radius: 50%;
+            background-color: #f8d8ec;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .rating-bubble input[type="radio"]:checked + label {
+            background-color: #c71585;
+            color: white;
+        }
+        .button {
+            background-color: #c71585;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.3);
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #a10e6a;
+        }
+        a {
+            color: #c71585;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Recommended Products for You</h2>
+
+    {% if rated_successfully %}
+    <div style='background-color:#e6ffed;border-left:5px solid #2ecc71;padding:10px 20px;margin-bottom:20px;color:#2e8b57;border-radius:6px;'>
+        ✅ Ratings submitted successfully. Thank you for your feedback!
+    </div>
+    {% endif %}
+
+    <form method='POST' action='/rate_product'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Link</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for index, row in recommendations.iterrows() %}
+                <tr>
+                    <td>{{ row['Product'] }}</td>
+                    <td>
+                        <a href='{{ row["product_url"] }}' target='_blank'>View</a>
+                    </td>
+                    <td class="rating-bubble">
+                        {% for rate in range(1, 6) %}
+                        <input
+                            type='radio'
+                            name='rating_{{ row["Product"] }}'
+                            id='r{{ rate }}_{{ index }}'
+                            value='{{ rate }}'
+                        >
+                        <label for='r{{ rate }}_{{ index }}'>{{ rate }}</label>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        <input type='submit' value='Submit Ratings' class='button'>
+
+        <div style="margin-top: 1rem; font-size: 0.95rem; color: #3a3a3a; background-color: #fff7fa; padding: 1rem; border-left: 5px solid #c71585; border-radius: 8px; font-weight: 500;">
+            <strong>Note:</strong> We currently detect <span style="color:#c71585">skin type</span>, <span style="color:#c71585">pigmentation</span>, <span style="color:#c71585">wrinkles</span>, <span style="color:#c71585">acne</span>, and <span style="color:#c71585">sensitivity</span>. If you're experiencing severe skin conditions, infections, or persistent irritation, we strongly recommend consulting a certified dermatologist for proper medical advice.
+        </div>
+
+    </form>
+
+    <br><br>
+    <a href='/'>⟵ Back to Home</a>
+</body>
+</html>

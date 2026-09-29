@@ -16,9 +16,6 @@ from threading import Thread
 import threading
 from ultralytics import YOLO
 import torch
-from flask import make_response, redirect, url_for, session
-
-from flask import session, redirect, url_for, make_response, flash
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -32,8 +29,8 @@ food_file = r"C:\Users\Lekhana\Downloads\food (1).csv"
 UPLOAD_FOLDER = "backend/uploads"
 os.makedirs(UPLOAD_FOLDER,exist_ok=True)
 YOLO_MODEL_A_PATH = r"C:\Users\Lekhana\Downloads\plswork1.pt"
-YOLO_MODEL_B_PATH=r"C:\Users\Lekhana\Downloads\tionbest (1).pt"
-model = YOLO(r"C:\Users\Lekhana\Downloads\tionbest (1).pt")  # load it
+YOLO_MODEL_B_PATH=r"C:\Users\Lekhana\Downloads\tionbest.pt"
+model = YOLO(r"C:\Users\Lekhana\Downloads\tionbest.pt")  # load it
 # If no GPU, use CPU
 # re-export it in current compatible format
 
@@ -107,10 +104,6 @@ def login():
     return render_template('login.html')
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_video():
-    if 'user_id' not in session:
-        flash("Please log in to continue.")
-        return redirect(url_for('login'))  # Change 'login' to your actual login route name
-
     if request.method == 'POST':
         file = request.files.get('file')
         if file:
@@ -214,7 +207,11 @@ def about_issues():
     about_info = []
 
     for issue in issues:
-        matches = df_food[df_food['skin_issues'].str.lower().str.contains(issue.lower())]
+        matches = df_food[
+            df_food['skin_issues']
+            .str.lower()
+            .str.contains(issue.lower())
+        ]
 
         for _, row in matches.iterrows():
             about_info.append({
@@ -222,118 +219,10 @@ def about_issues():
                 'description': row['about']
             })
 
-    return render_template_string("""
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>About Your Skin Issues</title>
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: 'Poppins', sans-serif;
-                    background: linear-gradient(120deg, #ffd6ec, #ffe6f2);
-                    color: #88004d;
-                }
-
-                .header {
-                    text-align: center;
-                    padding: 60px 20px 20px;
-                    background: linear-gradient(90deg, #ff80b3, #ffb3cc);
-                    color: white;
-                    border-bottom-left-radius: 30px;
-                    border-bottom-right-radius: 30px;
-                    box-shadow: 0 6px 18px rgba(255, 105, 180, 0.2);
-                }
-
-                .header h2 {
-                    font-size: 3em;
-                    font-weight: 600;
-                    margin: 0;
-                    animation: fadeInDown 1s ease-out;
-                }
-
-                .container {
-                    max-width: 900px;
-                    margin: 40px auto;
-                    padding: 30px;
-                    background-color: #fff0f5;
-                    border-radius: 24px;
-                    box-shadow: 0 12px 32px rgba(255, 105, 180, 0.2);
-                    animation: fadeIn 1s ease;
-                }
-
-                .card {
-                    background-color: #ffe6f2;
-                    border: 2px solid #ff99cc;
-                    border-radius: 16px;
-                    padding: 25px 30px;
-                    margin-bottom: 25px;
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;
-                }
-
-                .card h4 {
-                    color: #cc0066;
-                    font-size: 1.5em;
-                    margin-bottom: 12px;
-                }
-
-                .card p {
-                    font-size: 1.1em;
-                    color: #660033;
-                    line-height: 1.6;
-                }
-
-                .btn {
-                    display: block;
-                    text-align: center;
-                    background: linear-gradient(90deg, #ff66a3, #ff3385);
-                    color: white;
-                    font-weight: 600;
-                    font-size: 1.1em;
-                    text-decoration: none;
-                    padding: 14px 30px;
-                    border-radius: 30px;
-                    width: fit-content;
-                    margin: 40px auto 10px;
-                    transition: transform 0.3s ease, background 0.3s ease;
-                }
-
-                .btn:hover {
-                    transform: scale(1.05);
-                    background: linear-gradient(90deg, #ff3385, #e60073);
-                }
-
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-
-                @keyframes fadeInDown {
-                    from { opacity: 0; transform: translateY(-20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="header">
-                <h2>About Your Skin Issues</h2>
-            </div>
-            <div class="container">
-                {% for info in about_info %}
-                    <div class="card">
-                        <h4>{{ info['issue'] }}</h4>
-                        <p>{{ info['description'] }}</p>
-                    </div>
-                {% endfor %}
-                <a href="/food_recommendations" class="btn">Go to Food Recommendations ➡</a>
-            </div>
-        </body>
-        </html>
-    """, about_info=about_info)
-
+    return render_template(
+        'about_issues.html',
+        about_info=about_info
+    )
 
 
 @app.route('/food_recommendations')
@@ -346,7 +235,11 @@ def food_recommendations():
 
     # Loop through the skin issues and match with foods
     for issue in issues:
-        matches = df_food[df_food['skin_issues'].str.lower() == issue.lower()]
+
+        matches = df_food[
+            df_food['skin_issues'].str.lower() == issue.lower()
+        ]
+
         for _, row in matches.iterrows():
             food_suggestions.append({
                 'issue': issue,
@@ -356,291 +249,103 @@ def food_recommendations():
     # If no food suggestions, show a default message
     if not food_suggestions:
         food_suggestions.append({
-            'issue': "No Suggestions Available",
-            'food': "We could not find any food recommendations for your skin issues."
+            'issue': "No issues",
+            'food': "Remember healthy skin is a journey, not a destination. "
+                    "To keep that glow going, nourish yourself with foods "
+                    "rich in vitamin C, like citrus fruits, guavas and broccoli. "
+                    "Vitamin E rich foods like almonds can also help."
         })
 
-    # Render the food recommendations with dynamic content
-    return render_template_string('''
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Food Recommendations</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: 'Poppins', sans-serif;
-                background: linear-gradient(120deg, #ffd6ec, #ffe6f2);
-                color: #88004d;
-            }
-
-            .header {
-                text-align: center;
-                padding: 60px 20px 20px;
-                background: linear-gradient(90deg, #ff80b3, #ffb3cc);
-                color: white;
-                border-bottom-left-radius: 30px;
-                border-bottom-right-radius: 30px;
-                box-shadow: 0 6px 18px rgba(255, 105, 180, 0.2);
-            }
-
-            .header h2 {
-                font-size: 3em;
-                font-weight: 600;
-                margin: 0;
-                animation: fadeInDown 1s ease-out;
-            }
-
-            .container {
-                max-width: 900px;
-                margin: 40px auto;
-                padding: 30px;
-                background-color: #fff0f5;
-                border-radius: 24px;
-                box-shadow: 0 12px 32px rgba(255, 105, 180, 0.2);
-                animation: fadeIn 1s ease;
-            }
-
-            .card {
-                background-color: #ffe6f2;
-                border: 2px solid #ff99cc;
-                border-radius: 16px;
-                padding: 25px 30px;
-                margin-bottom: 25px;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
-            }
-
-            .card h4 {
-                color: #cc0066;
-                font-size: 1.5em;
-                margin-bottom: 12px;
-            }
-
-            .card p {
-                font-size: 1.1em;
-                color: #660033;
-                line-height: 1.6;
-            }
-
-            .btn {
-                display: block;
-                text-align: center;
-                background: linear-gradient(90deg, #ff66a3, #ff3385);
-                color: white;
-                font-weight: 600;
-                font-size: 1.1em;
-                text-decoration: none;
-                padding: 14px 30px;
-                border-radius: 30px;
-                width: fit-content;
-                margin: 40px auto 10px;
-                transition: transform 0.3s ease, background 0.3s ease;
-            }
-
-            .btn:hover {
-                transform: scale(1.05);
-                background: linear-gradient(90deg, #ff3385, #e60073);
-            }
-
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            @keyframes fadeInDown {
-                from { opacity: 0; transform: translateY(-20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <h2> Food Recommendations for Your Skin </h2>
-        </div>
-        <div class="container">
-            {% for suggestion in food_suggestions %}
-                <div class="card">
-                    <h4>{{ suggestion['issue'] }}</h4>
-                    <p>{{ suggestion['food'] }}</p>
-                </div>
-            {% endfor %}
-            <a href="/recommend" class="btn">Go to Skincare Products ➡</a>
-        </div>
-    </body>
-    </html>
-    ''', food_suggestions=food_suggestions)
+    return render_template(
+        'food_recommendations.html',
+        food_suggestions=food_suggestions
+    )
 
 
-    
-def hybrid_recommend(user_id, skin_type, skin_issues, top_n=5, w_cbf=0.6, w_cf=0.4):
+def hybrid_recommend(
+    user_id,
+    skin_type,
+    skin_issues,
+    top_n=5,
+    w_cbf=0.6,
+    w_cf=0.4
+):
+
     # Combine skin type and issues for content-based filtering
-    input_features = vectorizer.transform([skin_type + " " + " ".join(skin_issues)])
+    input_features = vectorizer.transform(
+        [skin_type + " " + " ".join(skin_issues)]
+    )
 
-    # Calculate the cosine similarity score for the products based on the skin type and issues
-    cbf_scores = cosine_similarity(input_features, tfidf_matrix).flatten()
+    # Calculate cosine similarity
+    cbf_scores = cosine_similarity(
+        input_features,
+        tfidf_matrix
+    ).flatten()
 
     # Collaborative filtering scores
     cf_scores = np.zeros(len(df_products))
+
     for idx, pid in enumerate(df_products.index):
+
         try:
             prediction = model.predict(user_id, int(pid))
             cf_scores[idx] = prediction.est
+
         except:
-            cf_scores[idx] = 3.0  # Default rating if prediction fails
+            cf_scores[idx] = 3.0
 
-    # Combine both scores with the specified weights
-    final_scores = (w_cbf * cbf_scores) + (w_cf * cf_scores)
+    # Combine both scores
+    final_scores = (
+        w_cbf * cbf_scores
+    ) + (
+        w_cf * cf_scores
+    )
 
-    # Get the top recommended products
+    # Get top recommended products
     top_indices = np.argsort(final_scores)[-top_n:][::-1]
 
-    # Return the top recommended products
-    return df_products.iloc[top_indices][['Product', 'product_url']]
+    return df_products.iloc[top_indices][
+        ['Product', 'product_url']
+    ]
+
+
 @app.route('/recommend')
 def recommend_products():
+
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
     user_id = session['user_id']
-    skin_type = session.get('skin_type', "Unknown")
-    skin_issues = session.get('skin_issues', ["General"])
 
-    # Get the top recommended products
-    recommendations = hybrid_recommend(user_id, skin_type, skin_issues)
+    skin_type = session.get(
+        'skin_type',
+        "Unknown"
+    )
 
-    # Create a form for rating the recommended products
-    rated_successfully = request.args.get('rated') == 'true'
+    skin_issues = session.get(
+        'skin_issues',
+        ["General"]
+    )
 
-    rating_form = f"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Recommendations</title>
-    <style>
-        body {{
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #fff0f5;
-            color: #3a3a3a;
-            padding: 2rem;
-        }}
-        h2 {{
-            color: #c71585;
-        }}
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }}
-        th, td {{
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }}
-        th {{
-            background-color: #ffe4f0;
-            color: #c71585;
-        }}
-        tr:hover {{
-            background-color: #fff5f8;
-        }}
-        .rating-bubble input[type="radio"] {{
-            display: none;
-        }}
-        .rating-bubble label {{
-            display: inline-block;
-            padding: 10px 16px;
-            margin: 4px;
-            border-radius: 50%;
-            background-color: #f8d8ec;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }}
-        .rating-bubble input[type="radio"]:checked + label {{
-            background-color: #c71585;
-            color: white;
-        }}
-        .button {{
-            background-color: #c71585;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.3);
-            transition: 0.3s;
-        }}
-        .button:hover {{
-            background-color: #a10e6a;
-        }}
-        a {{
-            color: #c71585;
-            text-decoration: none;
-            font-weight: 500;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-    </style>
-</head>
-<body>
-    <h2>Recommended Products for You</h2>
-    {"<div style='background-color:#e6ffed;border-left:5px solid #2ecc71;padding:10px 20px;margin-bottom:20px;color:#2e8b57;border-radius:6px;'>✅ Ratings submitted successfully. Thank you for your feedback!</div>" if rated_successfully else ""}
-    <form method='POST' action='/rate_product'>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Link</th>
-                    <th>Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-"""
+    # Get recommendations
+    recommendations = hybrid_recommend(
+        user_id,
+        skin_type,
+        skin_issues
+    )
 
-    # Add each recommended product to the rating form
-    for index, row in recommendations.iterrows():
-        rating_form += f"""
-        <tr>
-            <td>{row['Product']}</td>
-            <td><a href='{row['product_url']}' target='_blank'>View</a></td>
-            <td class="rating-bubble">
-                {"".join([f"<input type='radio' name='rating_{row['Product']}' id='r{rate}_{index}' value='{rate}'><label for='r{rate}_{index}'>{rate}</label>" for rate in range(1,6)])}
-            </td>
-        </tr>
-        """
+    # Check if ratings were successfully submitted
+    rated_successfully = (
+        request.args.get('rated') == 'true'
+    )
 
-    rating_form += """
-            </tbody>
-        </table>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
-            <a href="/logout" class="button" style="background-color: #f44336; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px; font-weight: 500;">Logout</a>
-
-            <input type='submit' value='Submit Ratings' class='button' style="padding: 0.5rem 1rem;">
-        </div>
-        <div style="margin-top: 1rem; font-size: 0.95rem; color: #3a3a3a; background-color: #fff7fa; padding: 1rem; border-left: 5px solid #c71585; border-radius: 8px; font-weight: 500;">
-            <strong>Note:</strong> We currently detect <span style="color:#c71585">skin type</span>, <span style="color:#c71585">pigmentation</span>, <span style="color:#c71585">wrinkles</span>, <span style="color:#c71585">acne</span>, and <span style="color:#c71585">sensitivity</span>. If you're experiencing severe skin conditions, infections, or persistent irritation, we strongly recommend consulting a certified dermatologist for proper medical advice.
-        </div>
-
-    </form>
-    <br><br>
-    <a href='/'>⟵ Back to Home</a>
-</body>
-</html>
-"""
+    return render_template(
+    'recommend.html',
+    recommendations=recommendations,
+    rated_successfully=rated_successfully
+)
 
 
-    return render_template_string(rating_form)
 
 
 
@@ -680,24 +385,6 @@ def rate_product():
 
     return redirect(url_for('recommend_products'))
 
-
-@app.route('/logout')
-def logout():
-    # Clear session data
-    session.clear()
-
-    # Create a response object for the redirect
-    response = make_response(redirect(url_for('home')))  # Redirect to home page
-    
-    # Ensure Flask's session cookie is expired
-    response.set_cookie('session', '', expires=0, path='/', secure=True, httponly=True)
-
-    # Set headers to prevent browser caching of the page
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
-    response.headers['Pragma'] = 'no-cache'
-
-    # Return the response
-    return response
 
 
 
