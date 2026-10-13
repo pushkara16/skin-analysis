@@ -51,11 +51,39 @@ vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(df_products["Concern"])
 
 # Collaborative Filtering Model
-reader = Reader(rating_scale=(1, 5))
-data = Dataset.load_from_df(df_ratings[['user_id', 'product', 'ratings']], reader)
-trainset, _ = train_test_split(data, test_size=0.2)
-model = SVD()
-model.fit(trainset)
+svd_model = None
+svd_known_users = set()
+
+
+def train_svd():
+    """(Re)train the SVD model on ALL ratings currently in the ratings CSV."""
+    global svd_model, svd_known_users
+
+    df = pd.read_csv(ratings_file)
+    df['product'] = pd.to_numeric(df['product'], errors='coerce')
+    df['ratings'] = pd.to_numeric(df['ratings'], errors='coerce')
+    df = df.dropna(subset=['user_id', 'product', 'ratings'])
+
+    if df.empty:
+        svd_model = None
+        svd_known_users = set()
+        return
+
+    df['product'] = df['product'].astype(int)
+    df['user_id'] = df['user_id'].astype(str)
+
+    reader = Reader(rating_scale=(1, 5))
+    data = Dataset.load_from_df(df[['user_id', 'product', 'ratings']], reader)
+
+    new_model = SVD()
+    new_model.fit(data.build_full_trainset())
+
+    # Swap in the new model only once it's fully trained
+    svd_model = new_model
+    svd_known_users = set(df['user_id'])
+
+
+train_svd()
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -285,14 +313,19 @@ def hybrid_recommend(
     # Collaborative filtering scores
     cf_scores = np.zeros(len(df_products))
 
+    current_model = svd_model
+    user_id = str(user_id)
+
     for idx, pid in enumerate(df_products.index):
 
-        try:
-            prediction = model.predict(user_id, int(pid))
-            cf_scores[idx] = prediction.est
+        if current_model is None or user_id not in svd_known_users:
+            # No ratings from this user yet: neutral CF score
+            cf_scores[idx] = 0.5
+            continue
 
-        except:
-            cf_scores[idx] = 3.0
+        prediction = current_model.predict(user_id, int(pid))
+        # Scale the 1-5 estimate to 0-1 so it matches cosine similarity
+        cf_scores[idx] = (prediction.est - 1) / 4
 
     # Combine both scores
     final_scores = (
@@ -383,7 +416,10 @@ def rate_product():
 
     df_ratings.to_csv(ratings_file, index=False)
 
-    return redirect(url_for('recommend_products'))
+    # Retrain so this user's new ratings count right away
+    train_svd()
+
+    return redirect(url_for('recommend_products', rated='true'))
 
 
 
